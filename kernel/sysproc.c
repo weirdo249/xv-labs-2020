@@ -8,7 +8,7 @@
 #include "proc.h"
 
 uint64
-sys_exit(void)
+sys_exit(void)//终止当前进程，并返回状态码 n
 {
   int n;
   if(argint(0, &n) < 0)
@@ -18,28 +18,28 @@ sys_exit(void)
 }
 
 uint64
-sys_getpid(void)
+sys_getpid(void)//返回当前进程的 PID。
 {
   return myproc()->pid;
 }
 
 uint64
-sys_fork(void)
+sys_fork(void)//创建一个子进程。
 {
   return fork();
 }
 
 uint64
-sys_wait(void)
+sys_wait(void)//等待子进程退出，并获取其退出状态
 {
   uint64 p;
   if(argaddr(0, &p) < 0)
-    return -1;
+    return -1;//通过 argaddr(0, &p) 获取用户态传递的地址，用于存储子进程的退出状态
   return wait(p);
 }
 
 uint64
-sys_sbrk(void)
+sys_sbrk(void)//调整进程的堆大小。
 {
   int addr;
   int n;
@@ -53,7 +53,7 @@ sys_sbrk(void)
 }
 
 uint64
-sys_sleep(void)
+sys_sleep(void)//让当前进程休眠指定的时钟滴答数。
 {
   int n;
   uint ticks0;
